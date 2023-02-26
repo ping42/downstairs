@@ -10,12 +10,14 @@ abstract class Platform<T> extends SpriteGroupComponent<T>
     with HasGameRef<Downstairs>, CollisionCallbacks {
   Platform({
     super.position,
+    this.isFirstPlatform = false,
   }) : super(
           size: Vector2.all(100),
           priority: 2,
         );
   final hitbox = RectangleHitbox();
   bool isMoving = false;
+  bool isFirstPlatform = false;
 
   double direction = 1;
   final Vector2 _velocity = Vector2.zero();
@@ -30,7 +32,9 @@ abstract class Platform<T> extends SpriteGroupComponent<T>
     await add(hitbox);
 
     final rand = Random().nextInt(100);
-    if (rand > 60) {
+    if (isFirstPlatform) {
+      isMoving = false;
+    } else if (rand > 60) {
       isMoving = true;
     }
   }
@@ -61,10 +65,10 @@ abstract class Platform<T> extends SpriteGroupComponent<T>
 enum LongNormalPlatformState { only }
 
 class LongNormalPlatform extends Platform<LongNormalPlatformState> {
-  LongNormalPlatform({super.position});
+  LongNormalPlatform({super.position, super.isFirstPlatform});
 
   final Map<String, Vector2> spriteOptions = {
-    'platform_normal_long': Vector2(48, 16),
+    'platform_normal_long': Vector2(48, 16)..scale(2),
   };
 
   @override
@@ -88,10 +92,10 @@ class LongNormalPlatform extends Platform<LongNormalPlatformState> {
 enum ShortNormalPlatformState { only }
 
 class ShortNormalPlatform extends Platform<ShortNormalPlatformState> {
-  ShortNormalPlatform({super.position});
+  ShortNormalPlatform({super.position, super.isFirstPlatform});
 
   final Map<String, Vector2> spriteOptions = {
-    'platform_normal_short': Vector2(32, 16),
+    'platform_normal_short': Vector2(32, 16)..scale(2),
   };
 
   @override

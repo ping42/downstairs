@@ -24,9 +24,9 @@ class ObjectComponents extends Component with HasGameRef<Downstairs> {
   void onMount() {
     super.onMount();
 
-    var currentX = gameRef.size.x.floor() / 2;
+    var currentX = gameRef.size.x.floor() / 2 - 30;
 
-    var currentY = -(_rand.nextInt(gameRef.size.y.floor()) / 3) - 50;
+    var currentY = gameRef.size.y.floor() / 3;
 
     for (var i = 0; i < 9; i++) {
       if (i != 0) {
@@ -39,6 +39,7 @@ class ObjectComponents extends Component with HasGameRef<Downstairs> {
             currentX,
             currentY,
           ),
+          i == 0,
         ),
       );
 
@@ -58,7 +59,7 @@ class ObjectComponents extends Component with HasGameRef<Downstairs> {
     if (topOfLowestPlatform > screenBottom) {
       var newPlatY = _generateNextY();
       var newPlatX = _generateNextX(100);
-      final nextPlat = _semiRandomPlatform(Vector2(newPlatX, newPlatY));
+      final nextPlat = _semiRandomPlatform(Vector2(newPlatX, newPlatY), false);
       add(nextPlat);
 
       _platforms.add(nextPlat);
@@ -72,7 +73,7 @@ class ObjectComponents extends Component with HasGameRef<Downstairs> {
   }
 
   void _cleanupPlatforms() {
-		// remove the highest platform
+    // remove the highest platform
     _platforms.removeAt(_platforms.length).removeFromParent();
   }
 
@@ -94,7 +95,7 @@ class ObjectComponents extends Component with HasGameRef<Downstairs> {
   }
 
   double _generateNextY() {
-    final currentLowestPlatformY = _platforms.first.center.y;
+    final currentLowestPlatformY = _platforms.last.center.y;
 
     final distanceToNextY = minVerticalDistanceToNextPlatform.toInt() +
         _rand
@@ -108,10 +109,16 @@ class ObjectComponents extends Component with HasGameRef<Downstairs> {
     return currentLowestPlatformY + distanceToNextY;
   }
 
-  Platform _semiRandomPlatform(Vector2 position) {
-    if (probGen.generateWithProbability(60)) {
-      return LongNormalPlatform(position: position);
+  Platform _semiRandomPlatform(Vector2 position, bool isFirstPlatform) {
+    if (probGen.generateWithProbability(70)) {
+      return LongNormalPlatform(
+        position: position,
+        isFirstPlatform: isFirstPlatform,
+      );
     }
-    return ShortNormalPlatform(position: position);
+    return ShortNormalPlatform(
+      position: position,
+      isFirstPlatform: isFirstPlatform,
+    );
   }
 }
