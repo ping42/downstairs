@@ -6,7 +6,6 @@ import 'package:downstairs/game/sprites/monkey.dart';
 import 'package:downstairs/l10n/l10n.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
-import 'package:flame/widgets.dart';
 
 class Downstairs extends FlameGame
     with HasKeyboardHandlerComponents, HasTappables, HasCollisionDetection {
@@ -22,9 +21,12 @@ class Downstairs extends FlameGame
   final WorldComponent _world = WorldComponent();
   GameplayComponent gameplayComponent = GameplayComponent();
   ObjectComponents objectComponents = ObjectComponents();
-  int screenBufferSpace = 30;
+  final int screenBufferSpace = 30;
 
   late Monkey player;
+
+  double cameraY = 0;
+  double worldBoundsTop = 0;
 
   @override
   Future<void> onLoad() async {
@@ -33,10 +35,6 @@ class Downstairs extends FlameGame
     await add(gameplayComponent);
 
     overlays.add('gameOverlay');
-
-    // await add(CounterComponent(position: (size / 2)..sub(Vector2(0, 16))));
-
-    // await add(Unicorn(position: size / 2));
   }
 
   @override
@@ -53,19 +51,19 @@ class Downstairs extends FlameGame
     }
 
     if (gameplayComponent.isPlaying) {
+      // Move camera and worldBounds down over time
+      cameraY += dt * 50;
+      worldBoundsTop = cameraY;
       final worldBounds = Rect.fromLTRB(
         0,
-        camera.position.y - screenBufferSpace,
+        worldBoundsTop,
         camera.gameSize.x,
-        camera.position.y + _world.size.y,
+        cameraY + _world.size.y + screenBufferSpace,
       );
       camera.worldBounds = worldBounds;
 
       if (player.position.y >
-          camera.position.y +
-              _world.size.y +
-              player.size.y +
-              screenBufferSpace) {
+          cameraY + _world.size.y + player.size.y + screenBufferSpace) {
         onLose();
       }
     }
@@ -84,14 +82,15 @@ class Downstairs extends FlameGame
 
     // 1. reset camera downwards movement
     // 2. set initial world bonuds
+    cameraY = 0;
+    worldBoundsTop = 0;
     camera
       ..resetMovement()
       ..worldBounds = Rect.fromLTRB(
         0,
-        -_world.size.y, // top of screen is 0, so negative is already off screen
+        -_world.size.y,
         camera.gameSize.x,
-        _world.size.y +
-            screenBufferSpace, // makes sure bottom bound of game is below bottom of screen
+        _world.size.y + screenBufferSpace,
       );
 
     player.resetPosition();
