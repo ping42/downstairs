@@ -47,6 +47,21 @@ class $AssetsImagesGen {
   AssetGenImage get dashRight =>
       const AssetGenImage('assets/images/dash_right.png');
 
+  AssetGenImage get monkeyDead =>
+      const AssetGenImage('assets/images/monkey_dead.png');
+
+  AssetGenImage get monkeyHit =>
+      const AssetGenImage('assets/images/monkey_hit.png');
+
+  AssetGenImage get monkeyIdle =>
+      const AssetGenImage('assets/images/monkey_idle.png');
+
+  AssetGenImage get monkeyJump =>
+      const AssetGenImage('assets/images/monkey_jump.png');
+
+  AssetGenImage get monkeyRun =>
+      const AssetGenImage('assets/images/monkey_run.png');
+
   AssetGenImage get platformNormalLong =>
       const AssetGenImage('assets/images/platform_normal_long.png');
 
