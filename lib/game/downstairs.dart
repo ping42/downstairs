@@ -22,7 +22,7 @@ class Downstairs extends FlameGame
   final WorldComponent _world = WorldComponent();
   GameplayComponent gameplayComponent = GameplayComponent();
   ObjectComponents objectComponents = ObjectComponents();
-  int screenBufferSpace = 300;
+  int screenBufferSpace = 30;
 
   late Monkey player;
 

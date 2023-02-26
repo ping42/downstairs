@@ -60,6 +60,10 @@ abstract class Platform<T> extends SpriteGroupComponent<T>
     _move(dt);
     super.update(dt);
   }
+
+  bool get goingRight => direction == 1;
+
+  bool get goingLeft => direction == -1;
 }
 
 enum LongNormalPlatformState { only }

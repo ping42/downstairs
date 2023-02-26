@@ -1,4 +1,5 @@
 import 'package:downstairs/game/game.dart';
+import 'package:downstairs/game/sprites/platform.dart';
 import 'package:downstairs/gen/assets.gen.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
@@ -33,6 +34,8 @@ class Monkey extends SpriteAnimationGroupComponent<MonkeyState>
 
   @override
   Future<void> onLoad() async {
+    debugMode = true;
+
     await super.onLoad();
 
     await _loadMonkeySpriteAnimations();
@@ -49,6 +52,8 @@ class Monkey extends SpriteAnimationGroupComponent<MonkeyState>
       return;
     }
 
+    var isFalling = true;
+
     _velocity.x = _hAxisInput * jumpSpeed;
 
     // allow player to go from right egde to left edge, vice versea
@@ -60,7 +65,29 @@ class Monkey extends SpriteAnimationGroupComponent<MonkeyState>
       position.x = dashHorizontalCenter;
     }
 
-    // _velocity.y += _gravity;
+    for (final platform in gameRef.objectComponents.platforms) {
+      if (collidingWith(platform)) {
+        isFalling = false;
+
+        // set vertical velocity to zero if monkey is on top of a platform
+        if (_velocity.y > 0 && position.y > platform.position.y) {
+          _velocity.y = 0;
+          position.y =
+              platform.position.y - (size.y / 2) - (platform.size.y / 2);
+          break;
+        }
+
+        if (platform.isMoving) {
+          final platformVelocity = Vector2.zero()
+            ..x = platform.direction * platform.speed;
+          position += platformVelocity * dt;
+        }
+      }
+    }
+
+    if (isFalling) {
+      _velocity.y += _gravity;
+    }
 
     position += _velocity * dt;
 
@@ -99,8 +126,27 @@ class Monkey extends SpriteAnimationGroupComponent<MonkeyState>
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    // TODO: implement onCollision
     super.onCollision(intersectionPoints, other);
+
+    final isCollidingVertically =
+        (intersectionPoints.first.y - intersectionPoints.last.y).abs() < 5;
+
+    if (isMovingDown && isCollidingVertically) {
+      current = MonkeyState.hit;
+      if (other is LongNormalPlatform || other is ShortNormalPlatform) {
+        _velocity = Vector2.zero();
+        current = MonkeyState.idle;
+        return;
+      }
+    }
+  }
+
+  void jump({double? specialJumpSpeed}) {
+    _velocity.y = specialJumpSpeed != null ? -specialJumpSpeed : -jumpSpeed;
+  }
+
+  void setJumpSpeed(double newJumpSpeed) {
+    jumpSpeed = newJumpSpeed;
   }
 
   void moveLeft() {

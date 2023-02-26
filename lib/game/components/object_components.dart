@@ -121,4 +121,6 @@ class ObjectComponents extends Component with HasGameRef<Downstairs> {
       isFirstPlatform: isFirstPlatform,
     );
   }
+
+  List<Platform> get platforms => _platforms;
 }
