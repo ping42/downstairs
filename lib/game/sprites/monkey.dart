@@ -71,6 +71,12 @@ class Monkey extends SpriteAnimationGroupComponent<MonkeyState>
       flipHorizontally();
     }
 
+    if (_hAxisInput == 0) {
+      current = MonkeyState.idle;
+    } else {
+      current = MonkeyState.run;
+    }
+
     super.update(dt);
   }
 
