@@ -49,16 +49,16 @@ class ObjectComponents extends Component with HasGameRef<Downstairs> {
 
   @override
   void update(double dt) {
-    final topOfLowestPlatform =
-        _platforms.first.position.y + _tallestPlatformHeight;
+    final topOfLast3Platform =
+        _platforms[_platforms.length - 2].position.y + _tallestPlatformHeight;
 
     final screenBottom = gameRef.player.position.y +
         (gameRef.size.x / 2) +
         gameRef.screenBufferSpace;
 
-    if (topOfLowestPlatform > screenBottom) {
-      var newPlatY = _generateNextY();
-      var newPlatX = _generateNextX(100);
+    if (screenBottom > topOfLast3Platform) {
+      final newPlatY = _generateNextY();
+      final newPlatX = _generateNextX(100);
       final nextPlat = _semiRandomPlatform(Vector2(newPlatX, newPlatY), false);
       add(nextPlat);
 
@@ -74,7 +74,7 @@ class ObjectComponents extends Component with HasGameRef<Downstairs> {
 
   void _cleanupPlatforms() {
     // remove the highest platform
-    _platforms.removeAt(_platforms.length).removeFromParent();
+    _platforms.removeAt(0).removeFromParent();
   }
 
   double _generateNextX(int platformWidth) {
