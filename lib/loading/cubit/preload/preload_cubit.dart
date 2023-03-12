@@ -22,7 +22,14 @@ class PreloadCubit extends Cubit<PreloadState> {
       ),
       PreloadPhase(
         'images',
-        () => images.loadAll([Assets.images.unicornAnimation.path]),
+        () => images.loadAll([
+          Assets.images.chefIdle.path,
+          Assets.images.chefJump.path,
+          Assets.images.chefRun.path,
+          Assets.images.monkeyIdle.path,
+          Assets.images.monkeyJump.path,
+          Assets.images.monkeyRun.path,
+        ]),
       ),
     ];
 

@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:downstairs/game/game.dart';
-import 'package:downstairs/game/sprites/monkey.dart';
+import 'package:downstairs/game/sprites/player.dart';
 import 'package:downstairs/l10n/l10n.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
@@ -23,7 +23,7 @@ class Downstairs extends FlameGame
   ObjectComponents objectComponents = ObjectComponents();
   final int screenBufferSpace = 30;
 
-  late Monkey player;
+  late Player player;
 
   double cameraY = 0;
   double worldBoundsTop = 0;
@@ -99,7 +99,10 @@ class Downstairs extends FlameGame
   }
 
   void setPlayer() {
-    player = Monkey(jumpSpeed: 300);
+    player = Player(
+      character: gameplayComponent.character,
+      jumpSpeed: 300,
+    );
     add(player);
   }
 

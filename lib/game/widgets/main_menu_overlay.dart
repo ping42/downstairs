@@ -13,14 +13,16 @@ class MainMenuOverlay extends StatefulWidget {
 }
 
 class MainMenuOverlayState extends State<MainMenuOverlay> {
+  Character character = Character.chef;
+
   @override
   Widget build(BuildContext context) {
-    final Downstairs game = widget.game as Downstairs;
+    final game = widget.game as Downstairs;
     final l10n = context.l10n;
     return LayoutBuilder(builder: (context, constraints) {
       // 760 is the smallest height the browser can have until the
       // layout is too large to fit.
-      final bool screenHeightIsSmall = constraints.maxHeight < 760;
+      final screenHeightIsSmall = constraints.maxHeight < 760;
       return Material(
         color: Theme.of(context).scaffoldBackgroundColor,
         child: Center(
@@ -29,6 +31,7 @@ class MainMenuOverlayState extends State<MainMenuOverlay> {
             height: 64,
             child: ElevatedButton(
               onPressed: () {
+                game.gameplayComponent.character = character;
                 game.startGame();
               },
               child: Center(child: Text(l10n.titleButtonStart)),

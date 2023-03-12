@@ -5,17 +5,16 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/services.dart';
 
-enum MonkeyState {
-  dead,
-  hit,
+enum PlayerState {
   idle,
   jump,
   run,
 }
 
-class Monkey extends SpriteAnimationGroupComponent<MonkeyState>
+class Player extends SpriteAnimationGroupComponent<PlayerState>
     with HasGameRef<Downstairs>, KeyboardHandler, CollisionCallbacks {
-  Monkey({
+  Player({
+    required this.character,
     super.position,
     this.jumpSpeed = 300,
   }) : super(
@@ -29,6 +28,7 @@ class Monkey extends SpriteAnimationGroupComponent<MonkeyState>
   final int movingRightInput = 1;
   Vector2 _velocity = Vector2.zero();
   bool get isMovingDown => _velocity.y > 0;
+  Character character;
   double jumpSpeed;
   final double _gravity = 9;
   final double collisionOffset = 5;
@@ -39,11 +39,11 @@ class Monkey extends SpriteAnimationGroupComponent<MonkeyState>
 
     await super.onLoad();
 
-    await _loadMonkeySpriteAnimations();
+    await _loadSpriteAnimations(character);
 
     await add(CircleHitbox());
 
-    current = MonkeyState.idle;
+    current = PlayerState.idle;
   }
 
   @override
@@ -88,6 +88,7 @@ class Monkey extends SpriteAnimationGroupComponent<MonkeyState>
     }
 
     if (isFalling) {
+      current = PlayerState.jump;
       _velocity.y += _gravity;
     }
 
@@ -100,10 +101,12 @@ class Monkey extends SpriteAnimationGroupComponent<MonkeyState>
       flipHorizontally();
     }
 
-    if (_hAxisInput == 0) {
-      current = MonkeyState.idle;
-    } else {
-      current = MonkeyState.run;
+    if (!isFalling) {
+      if (_hAxisInput == 0) {
+        current = PlayerState.idle;
+      } else {
+        current = PlayerState.run;
+      }
     }
 
     super.update(dt);
@@ -132,12 +135,11 @@ class Monkey extends SpriteAnimationGroupComponent<MonkeyState>
 
     final isCollidingTop = position.y < other.y;
     if (isMovingDown && isCollidingTop) {
-      current = MonkeyState.hit;
       if (other is LongNormalPlatform || other is ShortNormalPlatform) {
-        // set monkey to be on top of platform and falling velocity as zero
+        // set player to be on top of platform and falling velocity as zero
         _velocity = Vector2.zero();
         position.y = other.y - size.y / 2;
-        current = MonkeyState.idle;
+        current = PlayerState.idle;
         return;
       }
     }
@@ -154,7 +156,7 @@ class Monkey extends SpriteAnimationGroupComponent<MonkeyState>
   void moveLeft() {
     _hAxisInput = 0;
 
-    current = MonkeyState.run;
+    current = PlayerState.run;
 
     _hAxisInput += movingLeftInput;
   }
@@ -162,7 +164,7 @@ class Monkey extends SpriteAnimationGroupComponent<MonkeyState>
   void moveRight() {
     _hAxisInput = 0;
 
-    current = MonkeyState.run;
+    current = PlayerState.run;
 
     _hAxisInput += movingRightInput;
   }
@@ -173,7 +175,7 @@ class Monkey extends SpriteAnimationGroupComponent<MonkeyState>
 
   void reset() {
     _velocity = Vector2.zero();
-    current = MonkeyState.idle;
+    current = PlayerState.idle;
   }
 
   void resetPosition() {
@@ -184,6 +186,14 @@ class Monkey extends SpriteAnimationGroupComponent<MonkeyState>
   }
 
   double get playerBottomY => position.y + size.y / 2 - collisionOffset;
+
+  Future<void> _loadSpriteAnimations(Character character) async {
+    if (character == Character.chef) {
+      await _loadChefSpriteAnimations();
+    } else {
+      await _loadMonkeySpriteAnimations();
+    }
+  }
 
   Future<void> _loadMonkeySpriteAnimations() async {
     final dead = await gameRef.loadSpriteAnimation(
@@ -230,12 +240,43 @@ class Monkey extends SpriteAnimationGroupComponent<MonkeyState>
       ),
     );
 
-    animations = <MonkeyState, SpriteAnimation>{
-      MonkeyState.dead: dead,
-      MonkeyState.hit: hit,
-      MonkeyState.idle: idle,
-      MonkeyState.jump: jump,
-      MonkeyState.run: run,
+    animations = <PlayerState, SpriteAnimation>{
+      PlayerState.idle: idle,
+      PlayerState.jump: jump,
+      PlayerState.run: run,
+    };
+  }
+
+  Future<void> _loadChefSpriteAnimations() async {
+    final idle = await gameRef.loadSpriteAnimation(
+      Assets.images.chefIdle.path,
+      SpriteAnimationData.sequenced(
+        amount: 12,
+        stepTime: 0.1,
+        textureSize: Vector2(33, 32),
+      ),
+    );
+    final jump = await gameRef.loadSpriteAnimation(
+      Assets.images.chefJump.path,
+      SpriteAnimationData.sequenced(
+        amount: 2,
+        stepTime: 0.1,
+        textureSize: Vector2.all(32),
+      ),
+    );
+    final run = await gameRef.loadSpriteAnimation(
+      Assets.images.chefRun.path,
+      SpriteAnimationData.sequenced(
+        amount: 6,
+        stepTime: 0.1,
+        textureSize: Vector2.all(32),
+      ),
+    );
+
+    animations = <PlayerState, SpriteAnimation>{
+      PlayerState.idle: idle,
+      PlayerState.jump: jump,
+      PlayerState.run: run,
     };
   }
 }
