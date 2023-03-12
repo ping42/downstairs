@@ -31,6 +31,7 @@ class Monkey extends SpriteAnimationGroupComponent<MonkeyState>
   bool get isMovingDown => _velocity.y > 0;
   double jumpSpeed;
   final double _gravity = 9;
+  final double collisionOffset = 5;
 
   @override
   Future<void> onLoad() async {
@@ -66,7 +67,8 @@ class Monkey extends SpriteAnimationGroupComponent<MonkeyState>
     }
 
     for (final platform in gameRef.objectComponents.platforms) {
-      if (collidingWith(platform)) {
+      final isCollidingTop = playerBottomY < platform.y;
+      if (collidingWith(platform) && isCollidingTop) {
         isFalling = false;
 
         // set vertical velocity to zero if monkey is on top of a platform
@@ -128,13 +130,13 @@ class Monkey extends SpriteAnimationGroupComponent<MonkeyState>
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
 
-    final isCollidingVertically =
-        (intersectionPoints.first.y - intersectionPoints.last.y).abs() < 5;
-
-    if (isMovingDown && isCollidingVertically) {
+    final isCollidingTop = position.y < other.y;
+    if (isMovingDown && isCollidingTop) {
       current = MonkeyState.hit;
       if (other is LongNormalPlatform || other is ShortNormalPlatform) {
+        // set monkey to be on top of platform and falling velocity as zero
         _velocity = Vector2.zero();
+        position.y = other.y - size.y / 2;
         current = MonkeyState.idle;
         return;
       }
@@ -180,6 +182,8 @@ class Monkey extends SpriteAnimationGroupComponent<MonkeyState>
       gameRef.size.y / 4,
     );
   }
+
+  double get playerBottomY => position.y + size.y / 2 - collisionOffset;
 
   Future<void> _loadMonkeySpriteAnimations() async {
     final dead = await gameRef.loadSpriteAnimation(

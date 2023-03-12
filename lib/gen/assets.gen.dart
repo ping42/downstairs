@@ -38,15 +38,6 @@ class $AssetsImagesGen {
   AssetGenImage get background06 =>
       const AssetGenImage('assets/images/background_06.png');
 
-  AssetGenImage get dashCenter =>
-      const AssetGenImage('assets/images/dash_center.png');
-
-  AssetGenImage get dashLeft =>
-      const AssetGenImage('assets/images/dash_left.png');
-
-  AssetGenImage get dashRight =>
-      const AssetGenImage('assets/images/dash_right.png');
-
   AssetGenImage get monkeyDead =>
       const AssetGenImage('assets/images/monkey_dead.png');
 

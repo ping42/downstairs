@@ -36,7 +36,7 @@ class Player extends SpriteGroupComponent<PlayerState>
 
     await add(CircleHitbox());
 
-    await _loadCharacterSprites();
+    // await _loadCharacterSprites();
     current = PlayerState.center;
   }
 
@@ -118,15 +118,15 @@ class Player extends SpriteGroupComponent<PlayerState>
     );
   }
 
-  Future<void> _loadCharacterSprites() async {
-    final left = await gameRef.loadSprite(Assets.images.dashLeft.path);
-    final right = await gameRef.loadSprite(Assets.images.dashRight.path);
-    final center = await gameRef.loadSprite(Assets.images.dashCenter.path);
+  // Future<void> _loadCharacterSprites() async {
+  //   final left = await gameRef.loadSprite(Assets.images.dashLeft.path);
+  //   final right = await gameRef.loadSprite(Assets.images.dashRight.path);
+  //   final center = await gameRef.loadSprite(Assets.images.dashCenter.path);
 
-    sprites = <PlayerState, Sprite>{
-      PlayerState.left: left,
-      PlayerState.right: right,
-      PlayerState.center: center,
-    };
-  }
+  //   sprites = <PlayerState, Sprite>{
+  //     PlayerState.left: left,
+  //     PlayerState.right: right,
+  //     PlayerState.center: center,
+  //   };
+  // }
 }
