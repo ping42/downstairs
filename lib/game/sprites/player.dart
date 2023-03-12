@@ -18,7 +18,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
     super.position,
     this.jumpSpeed = 300,
   }) : super(
-          size: Vector2(32, 32)..scale(2),
+          size: Vector2.all(32)..scale(2),
           anchor: Anchor.center,
           priority: 1,
         );
