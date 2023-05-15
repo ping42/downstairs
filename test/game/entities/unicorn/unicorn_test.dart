@@ -29,10 +29,6 @@ void main() {
   }
 
   group('Unicorn', () {
-    setUp(() {
-      when(() => l10n.counterText(any())).thenReturn('counterText');
-    });
-
     testWithGame(
       'has all behaviors',
       createFlameGame,

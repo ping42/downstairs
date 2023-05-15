@@ -38,8 +38,6 @@ void main() {
     });
 
     setUp(() {
-      when(() => l10n.counterText(any())).thenReturn('counterText');
-
       when(() => audioPlayer.play(any())).thenAnswer((_) async {});
     });
 
