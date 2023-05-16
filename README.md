@@ -17,6 +17,8 @@ Monkey ![Monkey][character_monkey_gif]
 
 Start the game!
 
+Control the character with LEFT or RIGHT arrow on your keyboard if you are running on a web browser.
+
 ---
 
 ## Getting Started 🚀
