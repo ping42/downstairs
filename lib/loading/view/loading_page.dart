@@ -28,8 +28,10 @@ class _LoadingPageState extends State<LoadingPage> {
           !prevState.isComplete && state.isComplete,
       listener: (context, state) => onPreloadComplete(context),
       child: const Scaffold(
-        body: Center(
-          child: _LoadingInternal(),
+        body: SafeArea(
+          child: Center(
+            child: _LoadingInternal(),
+          ),
         ),
       ),
     );

@@ -1,8 +1,8 @@
 import 'package:downstairs/game/game.dart';
 import 'package:downstairs/gen/assets.gen.dart';
-import 'package:flame/widgets.dart';
 import 'package:downstairs/l10n/l10n.dart';
 import 'package:flame/game.dart';
+import 'package:flame/widgets.dart';
 import 'package:flutter/material.dart';
 
 class MainMenuOverlay extends StatefulWidget {
@@ -34,6 +34,11 @@ class MainMenuOverlayState extends State<MainMenuOverlay> {
             child: Column(
               children: [
                 if (!screenHeightIsSmall) const SizedBox(height: 30),
+                SizedBox(
+                  height: 128,
+                  child: Image.asset(Assets.images.downstairsLogo.path),
+                ),
+                const SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [

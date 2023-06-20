@@ -47,6 +47,9 @@ class $AssetsImagesGen {
   AssetGenImage get chefRun =>
       const AssetGenImage('assets/images/chef_run.png');
 
+  AssetGenImage get downstairsLogo =>
+      const AssetGenImage('assets/images/downstairs_logo.png');
+
   AssetGenImage get monkeyDead =>
       const AssetGenImage('assets/images/monkey_dead.png');
 

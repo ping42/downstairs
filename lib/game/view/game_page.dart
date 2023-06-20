@@ -1,7 +1,6 @@
 import 'package:downstairs/game/game.dart';
 import 'package:downstairs/game/widgets/game_overlay.dart';
 import 'package:downstairs/game/widgets/main_menu_overlay.dart';
-import 'package:downstairs/gen/assets.gen.dart';
 import 'package:downstairs/l10n/l10n.dart';
 import 'package:downstairs/loading/cubit/cubit.dart';
 import 'package:flame/game.dart' hide Route;
@@ -25,7 +24,11 @@ class GamePage extends StatelessWidget {
         return AudioCubit(audioCache: context.read<PreloadCubit>().audio);
       },
       child: const Scaffold(
-        body: SafeArea(child: GameView()),
+        body: SafeArea(
+          child: Center(
+            child: GameView(),
+          ),
+        ),
       ),
     );
   }
