@@ -47,9 +47,6 @@ class $AssetsImagesGen {
   AssetGenImage get chefRun =>
       const AssetGenImage('assets/images/chef_run.png');
 
-  AssetGenImage get downstairsLogo =>
-      const AssetGenImage('assets/images/downstairs_logo.png');
-
   AssetGenImage get monkeyDead =>
       const AssetGenImage('assets/images/monkey_dead.png');
 
@@ -65,14 +62,14 @@ class $AssetsImagesGen {
   AssetGenImage get monkeyRun =>
       const AssetGenImage('assets/images/monkey_run.png');
 
+  AssetGenImage get downstairsLogo =>
+      const AssetGenImage('assets/images/downstairs_logo.png');
+
   AssetGenImage get platformNormalLong =>
       const AssetGenImage('assets/images/platform_normal_long.png');
 
   AssetGenImage get platformNormalShort =>
       const AssetGenImage('assets/images/platform_normal_short.png');
-
-  AssetGenImage get unicornAnimation =>
-      const AssetGenImage('assets/images/unicorn_animation.png');
 }
 
 class $AssetsLicensesGen {

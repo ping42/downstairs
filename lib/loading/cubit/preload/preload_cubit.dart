@@ -18,7 +18,10 @@ class PreloadCubit extends Cubit<PreloadState> {
     final phases = [
       PreloadPhase(
         'audio',
-        () => audio.loadAll([Assets.audio.background, Assets.audio.effect]),
+        () => audio.loadAll([
+          Assets.audio.background,
+          Assets.audio.effect,
+        ]),
       ),
       PreloadPhase(
         'images',
@@ -26,9 +29,14 @@ class PreloadCubit extends Cubit<PreloadState> {
           Assets.images.chefIdle.path,
           Assets.images.chefJump.path,
           Assets.images.chefRun.path,
+          Assets.images.monkeyDead.path,
+          Assets.images.monkeyHit.path,
           Assets.images.monkeyIdle.path,
           Assets.images.monkeyJump.path,
           Assets.images.monkeyRun.path,
+          Assets.images.downstairsLogo.path,
+          Assets.images.platformNormalLong.path,
+          Assets.images.platformNormalShort.path,
         ]),
       ),
     ];

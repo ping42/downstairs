@@ -25,12 +25,27 @@ void main() {
         setUp: () {
           images = _MockImages();
           when(
-            () => images.loadAll([Assets.images.unicornAnimation.path]),
+            () => images.loadAll([
+              Assets.images.chefIdle.path,
+              Assets.images.chefJump.path,
+              Assets.images.chefRun.path,
+              Assets.images.monkeyDead.path,
+              Assets.images.monkeyHit.path,
+              Assets.images.monkeyIdle.path,
+              Assets.images.monkeyJump.path,
+              Assets.images.monkeyRun.path,
+              Assets.images.downstairsLogo.path,
+              Assets.images.platformNormalLong.path,
+              Assets.images.platformNormalShort.path,
+            ]),
           ).thenAnswer((invocation) => Future.value(<Image>[]));
 
           audio = _MockAudioCache();
           when(
-            () => audio.loadAll([Assets.audio.background, Assets.audio.effect]),
+            () => audio.loadAll([
+              Assets.audio.background,
+              Assets.audio.effect,
+            ]),
           ).thenAnswer(
             (invocation) async => [
               Uri.parse(Assets.audio.background),
@@ -63,10 +78,25 @@ void main() {
         ],
         verify: (bloc) {
           verify(
-            () => audio.loadAll([Assets.audio.background, Assets.audio.effect]),
+            () => audio.loadAll([
+              Assets.audio.background,
+              Assets.audio.effect,
+            ]),
           ).called(1);
           verify(
-            () => images.loadAll([Assets.images.unicornAnimation.path]),
+            () => images.loadAll([
+              Assets.images.chefIdle.path,
+              Assets.images.chefJump.path,
+              Assets.images.chefRun.path,
+              Assets.images.monkeyDead.path,
+              Assets.images.monkeyHit.path,
+              Assets.images.monkeyIdle.path,
+              Assets.images.monkeyJump.path,
+              Assets.images.monkeyRun.path,
+              Assets.images.downstairsLogo.path,
+              Assets.images.platformNormalLong.path,
+              Assets.images.platformNormalShort.path,
+            ]),
           ).called(1);
         },
       );

@@ -7,21 +7,21 @@ environment:
   sdk: ">=2.19.0 <3.0.0"
 
 dependencies:
-  audioplayers: ^3.0.0
+  audioplayers: ^4.1.0
   bloc: ^8.1.1
   equatable: ^2.0.5
   flame: ^1.6.0
-  flame_audio: ^1.4.0
+  flame_audio: ^2.0.4
   flame_behaviors: ^0.2.0
   flutter:
-    sdk: flutter
-  flutter_web_plugins:
     sdk: flutter
   flutter_bloc: ^8.1.2
   flutter_localizations:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
   google_fonts: ^4.0.1
-  intl: ^0.17.0
+  intl: ^0.18.0
   mockingjay: ^0.3.0
 
 dev_dependencies:
@@ -31,7 +31,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   mocktail: ^0.3.0
-  very_good_analysis: ^4.0.0
+  very_good_analysis: ^5.0.0+1
 
 flutter_launcher_icons:
   image_path: "assets/images/downstairs_logo.png"
