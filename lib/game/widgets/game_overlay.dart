@@ -27,47 +27,44 @@ class GameOverlayState extends State<GameOverlay> {
       color: Colors.transparent,
       child: Stack(
         children: [
-          // Positioned(
-          //   top: 30,
-          //   left: 30,
-          //   child: ScoreDisplay(game: widget.game),
-          // ),
           Positioned(
             top: 10,
             right: 10,
-            child: Row(
+            child: Column(
               children: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.refresh,
-                    color: Colors.white,
-                  ),
-                  onPressed: game.resetGame,
-                ),
-                BlocBuilder<AudioCubit, AudioState>(
-                  builder: (context, state) {
-                    return IconButton(
-                      icon: Icon(
-                        state.volume == 0 ? Icons.volume_off : Icons.volume_up,
+                Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(
+                        Icons.refresh,
                         color: Colors.white,
                       ),
-                      onPressed: () =>
-                          context.read<AudioCubit>().toggleVolume(),
-                    );
-                  },
+                      onPressed: game.resetGame,
+                    ),
+                    BlocBuilder<AudioCubit, AudioState>(
+                      builder: (context, state) {
+                        return IconButton(
+                          icon: Icon(
+                            state.volume == 0
+                                ? Icons.volume_off
+                                : Icons.volume_up,
+                            color: Colors.white,
+                          ),
+                          onPressed: () =>
+                              context.read<AudioCubit>().toggleVolume(),
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        isPaused ? Icons.play_arrow : Icons.pause,
+                        color: Colors.white,
+                      ),
+                      onPressed: togglePause,
+                    ),
+                  ],
                 ),
-                IconButton(
-                  icon: Icon(
-                    isPaused ? Icons.play_arrow : Icons.pause,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    game.togglePauseState();
-                    setState(() {
-                      isPaused = !isPaused;
-                    });
-                  },
-                ),
+                ScoreDisplay(widget.game),
               ],
             ),
           ),
@@ -118,17 +115,48 @@ class GameOverlayState extends State<GameOverlay> {
           //     ),
           //   ),
           if (isPaused)
-            Positioned(
-              top: MediaQuery.of(context).size.height / 2 - 72.0,
-              right: MediaQuery.of(context).size.width / 2 - 72.0,
-              child: const Icon(
-                Icons.pause_circle,
-                size: 144,
-                color: Colors.white,
+            Center(
+              child: IconButton(
+                icon: const Icon(
+                  Icons.pause_circle,
+                  size: 144,
+                  color: Colors.white,
+                ),
+                onPressed: togglePause,
               ),
             ),
         ],
       ),
+    );
+  }
+
+  void togglePause() {
+    (widget.game as Downstairs).togglePauseState();
+    setState(() {
+      isPaused = !isPaused;
+    });
+  }
+}
+
+class ScoreDisplay extends StatelessWidget {
+  const ScoreDisplay(this.game, {super.key});
+
+  final Game game;
+
+  @override
+  Widget build(BuildContext context) {
+    final game = this.game as Downstairs;
+    return ValueListenableBuilder(
+      valueListenable: game.gameplayComponent.score,
+      builder: (context, value, child) {
+        return Text(
+          value.toString(),
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+          ),
+        );
+      },
     );
   }
 }

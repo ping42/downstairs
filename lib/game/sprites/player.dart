@@ -32,6 +32,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
   double jumpSpeed;
   final double _gravity = 9;
   final double collisionOffset = 5;
+  final List<Platform> _steppedPlatforms = [];
 
   @override
   Future<void> onLoad() async {
@@ -83,6 +84,12 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
           final platformVelocity = Vector2.zero()
             ..x = platform.direction * platform.speed;
           position += platformVelocity * dt;
+        }
+
+        // add player score if they have touched a new platform
+        if (!_steppedPlatforms.contains(platform)) {
+          gameRef.gameplayComponent.increaseScore();
+          _steppedPlatforms.add(platform);
         }
       }
     }
