@@ -1,8 +1,6 @@
 part of 'preload_cubit.dart';
 
-/// State for [PreloadCubit].
 class PreloadState extends Equatable {
-  /// Create a [PreloadState] with initial conditions.
   const PreloadState.initial()
       : totalCount = 0,
         loadedCount = 0,

@@ -23,6 +23,19 @@ void main() {
       blocTest<PreloadCubit, PreloadState>(
         'loads assets',
         setUp: () {
+          audio = _MockAudioCache();
+          when(
+            () => audio.loadAll([
+              Assets.audio.background,
+              Assets.audio.effect,
+            ]),
+          ).thenAnswer(
+            (invocation) async => [
+              Uri.parse(Assets.audio.background),
+              Uri.parse(Assets.audio.effect)
+            ],
+          );
+
           images = _MockImages();
           when(
             () => images.loadAll([
@@ -39,19 +52,6 @@ void main() {
               Assets.images.platformNormalShort.path,
             ]),
           ).thenAnswer((invocation) => Future.value(<Image>[]));
-
-          audio = _MockAudioCache();
-          when(
-            () => audio.loadAll([
-              Assets.audio.background,
-              Assets.audio.effect,
-            ]),
-          ).thenAnswer(
-            (invocation) async => [
-              Uri.parse(Assets.audio.background),
-              Uri.parse(Assets.audio.effect)
-            ],
-          );
         },
         build: () => PreloadCubit(images, audio),
         act: (bloc) => bloc.loadSequentially(),
