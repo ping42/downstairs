@@ -20,7 +20,7 @@ class Downstairs extends FlameGame
   final AudioPlayer effectPlayer;
   final WorldComponent _world = WorldComponent();
   GameplayComponent gameplayComponent = GameplayComponent();
-  ObjectComponents objectComponents = ObjectComponents();
+  ObjectComponent objectComponent = ObjectComponent();
   final int screenBufferSpace = 30;
 
   late Player player;
@@ -74,8 +74,8 @@ class Downstairs extends FlameGame
 
     gameplayComponent.reset();
 
-    if (children.contains(objectComponents)) {
-      objectComponents.removeFromParent();
+    if (children.contains(objectComponent)) {
+      objectComponent.removeFromParent();
     }
 
     player.reset();
@@ -107,12 +107,12 @@ class Downstairs extends FlameGame
   }
 
   void setPlatformsGenerator() {
-    objectComponents = ObjectComponents(
+    objectComponent = ObjectComponent(
       minVerticalDistanceToNextPlatform: 200,
       maxVerticalDistanceToNextPlatform: 300,
     );
 
-    add(objectComponents);
+    add(objectComponent);
   }
 
   void startGame() {

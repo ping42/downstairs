@@ -67,7 +67,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
       position.x = dashHorizontalCenter;
     }
 
-    for (final platform in gameRef.objectComponents.platforms) {
+    for (final platform in gameRef.objectComponent.platforms) {
       final isCollidingTop = playerBottomY < platform.y;
       if (collidingWith(platform) && isCollidingTop) {
         isFalling = false;

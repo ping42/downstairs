@@ -8,8 +8,8 @@ import 'package:flame/components.dart';
 
 final Random _rand = Random();
 
-class ObjectComponents extends Component with HasGameRef<Downstairs> {
-  ObjectComponents({
+class ObjectComponent extends Component with HasGameRef<Downstairs> {
+  ObjectComponent({
     this.minVerticalDistanceToNextPlatform = 200,
     this.maxVerticalDistanceToNextPlatform = 300,
   });
@@ -63,8 +63,6 @@ class ObjectComponents extends Component with HasGameRef<Downstairs> {
       add(nextPlat);
 
       _platforms.add(nextPlat);
-
-      gameRef.gameplayComponent.increaseScore();
 
       _cleanupPlatforms();
     }
