@@ -34,10 +34,6 @@ class MainMenuOverlayState extends State<MainMenuOverlay> {
             child: Column(
               children: [
                 if (!screenHeightIsSmall) const SizedBox(height: 30),
-                SizedBox(
-                  height: 128,
-                  child: Image.asset(Assets.images.downstairsLogo.path),
-                ),
                 const SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -73,7 +69,14 @@ class MainMenuOverlayState extends State<MainMenuOverlay> {
                       game.gameplayComponent.character = character;
                       game.startGame();
                     },
-                    child: Center(child: Text(l10n.titleButtonStart)),
+                    child: Center(
+                        child: Text(
+                      l10n.titleButtonStart,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    )),
                   ),
                 ),
               ],

@@ -5,7 +5,6 @@ import 'package:downstairs/game/game.dart';
 import 'package:downstairs/gen/assets.gen.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:uuid/uuid.dart';
 
 abstract class Platform<T> extends SpriteGroupComponent<T>
     with HasGameRef<Downstairs>, CollisionCallbacks {
