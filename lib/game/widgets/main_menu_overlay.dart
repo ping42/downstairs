@@ -61,6 +61,7 @@ class MainMenuOverlayState extends State<MainMenuOverlay> {
                     ),
                   ],
                 ),
+                const SizedBox(height: 30),
                 LevelSelection(
                   onSelectLevel: (selecdtedLevel) {
                     setState(() {
@@ -113,62 +114,95 @@ class CharacterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
+    return OutlinedButton(
       onPressed: onSelectCharacter,
+      style: OutlinedButton.styleFrom(
+        backgroundColor: selected ? Colors.lightBlue : Colors.white,
+      ),
       child: Padding(
         padding: const EdgeInsets.all(32),
         child: character == Character.chef
             ? SizedBox(
                 width: 96,
                 height: 96,
-                child: selected
-                    ? SpriteAnimationWidget.asset(
-                        path: Assets.images.chefRun.path,
-                        data: SpriteAnimationData.sequenced(
-                          amount: 6,
-                          stepTime: 0.1,
-                          textureSize: Vector2.all(32),
-                        ),
-                        anchor: Anchor.center,
-                        playing: selected,
-                      )
-                    : SpriteAnimationWidget.asset(
-                        path: Assets.images.chefIdle.path,
-                        data: SpriteAnimationData.sequenced(
-                          amount: 12,
-                          stepTime: 0.1,
-                          textureSize: Vector2(33, 32),
-                        ),
-                        anchor: Anchor.center,
-                        playing: selected,
-                      ),
+                child: CharacterChef(selected: selected),
               )
             : SizedBox(
                 width: 96,
                 height: 96,
-                child: selected
-                    ? SpriteAnimationWidget.asset(
-                        path: Assets.images.monkeyRun.path,
-                        data: SpriteAnimationData.sequenced(
-                          amount: 8,
-                          stepTime: 0.1,
-                          textureSize: Vector2.all(32),
-                        ),
-                        anchor: Anchor.center,
-                        playing: selected,
-                      )
-                    : SpriteAnimationWidget.asset(
-                        path: Assets.images.monkeyIdle.path,
-                        data: SpriteAnimationData.sequenced(
-                          amount: 18,
-                          stepTime: 0.1,
-                          textureSize: Vector2.all(32),
-                        ),
-                        anchor: Anchor.center,
-                        playing: selected,
-                      ),
+                child: CharacterMonkey(selected: selected),
               ),
       ),
+    );
+  }
+}
+
+class CharacterChef extends StatelessWidget {
+  const CharacterChef({
+    required this.selected,
+    super.key,
+  });
+
+  final bool selected;
+
+  @override
+  Widget build(BuildContext context) {
+    if (selected) {
+      return SpriteAnimationWidget.asset(
+        path: Assets.images.chefRun.path,
+        data: SpriteAnimationData.sequenced(
+          amount: 6,
+          stepTime: 0.1,
+          textureSize: Vector2.all(32),
+        ),
+        anchor: Anchor.center,
+        playing: selected,
+      );
+    }
+    return SpriteAnimationWidget.asset(
+      path: Assets.images.chefIdle.path,
+      data: SpriteAnimationData.sequenced(
+        amount: 12,
+        stepTime: 0.1,
+        textureSize: Vector2(33, 32),
+      ),
+      anchor: Anchor.center,
+      playing: selected,
+    );
+  }
+}
+
+class CharacterMonkey extends StatelessWidget {
+  const CharacterMonkey({
+    required this.selected,
+    super.key,
+  });
+
+  final bool selected;
+
+  @override
+  Widget build(BuildContext context) {
+    if (selected) {
+      return SpriteAnimationWidget.asset(
+        path: Assets.images.monkeyRun.path,
+        data: SpriteAnimationData.sequenced(
+          amount: 8,
+          stepTime: 0.1,
+          textureSize: Vector2.all(32),
+        ),
+        anchor: Anchor.center,
+        playing: selected,
+      );
+    }
+    return SpriteAnimationWidget.asset(
+      path: Assets.images.monkeyIdle.path,
+      data: SpriteAnimationData.sequenced(
+        amount: 18,
+        stepTime: 0.1,
+        textureSize: Vector2.all(32),
+      ),
+      anchor: Anchor.center,
+      playing: selected,
     );
   }
 }
