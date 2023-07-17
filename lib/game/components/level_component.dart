@@ -14,31 +14,36 @@ class LevelComponent extends Component with HasGameRef<Downstairs> {
     1: const Difficulty(
       minDistance: 100,
       maxDistance: 200,
+      cameraSpeed: 150,
       platformSpeed: 35,
       score: 0,
     ),
     2: const Difficulty(
-      minDistance: 200,
+      minDistance: 150,
       maxDistance: 300,
-      platformSpeed: 45,
+      cameraSpeed: 180,
+      platformSpeed: 50,
       score: 10,
     ),
     3: const Difficulty(
       minDistance: 200,
       maxDistance: 400,
-      platformSpeed: 55,
+      cameraSpeed: 200,
+      platformSpeed: 65,
       score: 20,
     ),
     4: const Difficulty(
-      minDistance: 200,
+      minDistance: 250,
       maxDistance: 500,
-      platformSpeed: 65,
+      cameraSpeed: 240,
+      platformSpeed: 70,
       score: 30,
     ),
     5: const Difficulty(
-      minDistance: 200,
+      minDistance: 300,
       maxDistance: 600,
-      platformSpeed: 75,
+      cameraSpeed: 300,
+      platformSpeed: 85,
       score: 40,
     ),
   };
@@ -46,6 +51,8 @@ class LevelComponent extends Component with HasGameRef<Downstairs> {
   double get minDistance => levelsConfig[level.value]!.minDistance;
 
   double get maxDistance => levelsConfig[level.value]!.maxDistance;
+
+  double get cameraSpeed => levelsConfig[level.value]!.cameraSpeed;
 
   double get platformSpeed => levelsConfig[level.value]!.platformSpeed;
 
@@ -86,12 +93,14 @@ class Difficulty {
   const Difficulty({
     required this.minDistance,
     required this.maxDistance,
+    required this.cameraSpeed,
     required this.platformSpeed,
     required this.score,
   });
 
   final double minDistance;
   final double maxDistance;
+  final double cameraSpeed;
   final double platformSpeed;
   final int score;
 }

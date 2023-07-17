@@ -18,7 +18,7 @@ class Downstairs extends FlameGame
 
   final AppLocalizations l10n;
   final AudioPlayer effectPlayer;
-  final WorldComponent _world = WorldComponent();
+  final WorldComponent _worldComponent = WorldComponent();
   GameplayComponent gameplayComponent = GameplayComponent();
   LevelComponent levelComponent = LevelComponent();
   ObjectComponent objectComponent = ObjectComponent();
@@ -31,11 +31,11 @@ class Downstairs extends FlameGame
 
   @override
   Future<void> onLoad() async {
-    await add(_world);
-
-    await add(gameplayComponent);
-
-    await add(levelComponent);
+    await addAll([
+      _worldComponent,
+      gameplayComponent,
+      levelComponent,
+    ]);
 
     overlays.add('gameOverlay');
   }
@@ -57,18 +57,21 @@ class Downstairs extends FlameGame
       checkLevelUp();
 
       // move camera and worldBounds down over time
-      cameraY += dt * 50;
+      cameraY += dt * levelComponent.cameraSpeed;
       worldBoundsTop = cameraY;
       final worldBounds = Rect.fromLTRB(
         0,
         worldBoundsTop,
         camera.gameSize.x,
-        cameraY + _world.size.y + screenBufferSpace,
+        cameraY + _worldComponent.size.y + screenBufferSpace,
       );
       camera.worldBounds = worldBounds;
 
       if (player.position.y >
-          cameraY + _world.size.y + player.size.y + screenBufferSpace) {
+          cameraY +
+              _worldComponent.size.y +
+              player.size.y +
+              screenBufferSpace) {
         onLose();
       }
     }
@@ -95,9 +98,9 @@ class Downstairs extends FlameGame
       ..resetMovement()
       ..worldBounds = Rect.fromLTRB(
         0,
-        -_world.size.y,
+        -_worldComponent.size.y,
         camera.gameSize.x,
-        _world.size.y + screenBufferSpace,
+        _worldComponent.size.y + screenBufferSpace,
       );
 
     player.resetPosition();
