@@ -10,12 +10,14 @@ final Random _rand = Random();
 
 class ObjectComponent extends Component with HasGameRef<Downstairs> {
   ObjectComponent({
-    this.minVerticalDistanceToNextPlatform = 200,
-    this.maxVerticalDistanceToNextPlatform = 300,
+    this.minVerticalDistanceToNextPlatform = 100,
+    this.maxVerticalDistanceToNextPlatform = 200,
+    this.minPlatformSpeed = 35,
   });
 
   double minVerticalDistanceToNextPlatform;
   double maxVerticalDistanceToNextPlatform;
+  double minPlatformSpeed;
   final probGen = ProbabilityGenerator();
   final double _tallestPlatformHeight = 50;
   final List<Platform> _platforms = [];
@@ -75,6 +77,12 @@ class ObjectComponent extends Component with HasGameRef<Downstairs> {
     _platforms.removeAt(0).removeFromParent();
   }
 
+  void configure(int nextLevel, Difficulty difficulty) {
+    minVerticalDistanceToNextPlatform = difficulty.minDistance;
+    maxVerticalDistanceToNextPlatform = difficulty.maxDistance;
+    minPlatformSpeed = difficulty.platformSpeed;
+  }
+
   double _generateNextX(int platformWidth) {
     final previousPlatformXRange = Range(
       _platforms.last.position.x,
@@ -112,11 +120,13 @@ class ObjectComponent extends Component with HasGameRef<Downstairs> {
       return LongNormalPlatform(
         position: position,
         isFirstPlatform: isFirstPlatform,
+        speed: minPlatformSpeed,
       );
     }
     return ShortNormalPlatform(
       position: position,
       isFirstPlatform: isFirstPlatform,
+      speed: minPlatformSpeed,
     );
   }
 

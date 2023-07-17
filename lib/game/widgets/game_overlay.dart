@@ -64,6 +64,7 @@ class GameOverlayState extends State<GameOverlay> {
                     ),
                   ],
                 ),
+                LevelDisplay(widget.game),
                 ScoreDisplay(widget.game),
               ],
             ),
@@ -138,6 +139,29 @@ class GameOverlayState extends State<GameOverlay> {
   }
 }
 
+class LevelDisplay extends StatelessWidget {
+  const LevelDisplay(this.game, {super.key});
+
+  final Game game;
+
+  @override
+  Widget build(BuildContext context) {
+    final game = this.game as Downstairs;
+    return ValueListenableBuilder(
+      valueListenable: game.levelComponent.level,
+      builder: (context, value, child) {
+        return Text(
+          'Level: $value',
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+          ),
+        );
+      },
+    );
+  }
+}
+
 class ScoreDisplay extends StatelessWidget {
   const ScoreDisplay(this.game, {super.key});
 
@@ -150,7 +174,7 @@ class ScoreDisplay extends StatelessWidget {
       valueListenable: game.gameplayComponent.score,
       builder: (context, value, child) {
         return Text(
-          value.toString(),
+          'Score: $value',
           style: const TextStyle(
             color: Colors.white,
             fontSize: 16,

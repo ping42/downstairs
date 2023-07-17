@@ -16,6 +16,7 @@ class MainMenuOverlay extends StatefulWidget {
 
 class MainMenuOverlayState extends State<MainMenuOverlay> {
   Character character = Character.chef;
+  int level = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class MainMenuOverlayState extends State<MainMenuOverlay> {
                     CharacterButton(
                       character: Character.chef,
                       selected: character == Character.chef,
-                      onSelectChar: () {
+                      onSelectCharacter: () {
                         setState(() {
                           character = Character.chef;
                         });
@@ -51,7 +52,7 @@ class MainMenuOverlayState extends State<MainMenuOverlay> {
                     CharacterButton(
                       character: Character.monkey,
                       selected: character == Character.monkey,
-                      onSelectChar: () {
+                      onSelectCharacter: () {
                         setState(() {
                           character = Character.monkey;
                         });
@@ -59,6 +60,14 @@ class MainMenuOverlayState extends State<MainMenuOverlay> {
                       characterWidth: characterWidth,
                     ),
                   ],
+                ),
+                LevelSelection(
+                  onSelectLevel: (selecdtedLevel) {
+                    setState(() {
+                      game.levelComponent.selectedLevel = selecdtedLevel;
+                    });
+                  },
+                  level: game.levelComponent.selectedLevel,
                 ),
                 const SizedBox(height: 30),
                 SizedBox(
@@ -91,21 +100,21 @@ class MainMenuOverlayState extends State<MainMenuOverlay> {
 class CharacterButton extends StatelessWidget {
   const CharacterButton({
     required this.character,
-    required this.onSelectChar,
+    required this.onSelectCharacter,
     required this.characterWidth,
     super.key,
     this.selected = false,
   });
 
   final Character character;
-  final void Function() onSelectChar;
+  final void Function() onSelectCharacter;
   final double characterWidth;
   final bool selected;
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: onSelectChar,
+      onPressed: onSelectCharacter,
       child: Padding(
         padding: const EdgeInsets.all(32),
         child: character == Character.chef
@@ -160,6 +169,106 @@ class CharacterButton extends StatelessWidget {
                       ),
               ),
       ),
+    );
+  }
+}
+
+class LevelSelection extends StatelessWidget {
+  const LevelSelection({
+    required this.onSelectLevel,
+    required this.level,
+    super.key,
+  });
+
+  final void Function(int level) onSelectLevel;
+  final int level;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(16),
+          child: OutlinedButton(
+            onPressed: () => onSelectLevel(1),
+            style: OutlinedButton.styleFrom(
+              backgroundColor: level == 1 ? Colors.lightBlue : Colors.white,
+            ),
+            child: Text(
+              'Level 1',
+              style: TextStyle(
+                color: level == 1 ? Colors.white : Colors.black,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.all(16),
+          child: OutlinedButton(
+            onPressed: () => onSelectLevel(2),
+            style: OutlinedButton.styleFrom(
+              backgroundColor: level == 2 ? Colors.lightBlue : Colors.white,
+            ),
+            child: Text(
+              'Level 2',
+              style: TextStyle(
+                color: level == 2 ? Colors.white : Colors.black,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.all(16),
+          child: OutlinedButton(
+            onPressed: () => onSelectLevel(3),
+            style: OutlinedButton.styleFrom(
+              backgroundColor: level == 3 ? Colors.lightBlue : Colors.white,
+            ),
+            child: Text(
+              'Level 3',
+              style: TextStyle(
+                color: level == 3 ? Colors.white : Colors.black,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.all(16),
+          child: OutlinedButton(
+            onPressed: () => onSelectLevel(4),
+            style: OutlinedButton.styleFrom(
+              backgroundColor: level == 4 ? Colors.lightBlue : Colors.white,
+            ),
+            child: Text(
+              'Level 4',
+              style: TextStyle(
+                color: level == 4 ? Colors.white : Colors.black,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.all(16),
+          child: OutlinedButton(
+            onPressed: () => onSelectLevel(5),
+            style: OutlinedButton.styleFrom(
+              backgroundColor: level == 5 ? Colors.lightBlue : Colors.white,
+            ),
+            child: Text(
+              'Level 5',
+              style: TextStyle(
+                color: level == 5 ? Colors.white : Colors.black,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

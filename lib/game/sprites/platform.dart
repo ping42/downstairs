@@ -11,6 +11,7 @@ abstract class Platform<T> extends SpriteGroupComponent<T>
   Platform({
     super.position,
     this.isFirstPlatform = false,
+    this.speed = 35,
   }) : super(
           size: Vector2.all(100),
           priority: 2,
@@ -21,7 +22,7 @@ abstract class Platform<T> extends SpriteGroupComponent<T>
 
   double direction = 1;
   final Vector2 _velocity = Vector2.zero();
-  double speed = 35;
+  double speed;
 
   @override
   FutureOr<void> onLoad() async {
@@ -69,7 +70,7 @@ abstract class Platform<T> extends SpriteGroupComponent<T>
 enum LongNormalPlatformState { only }
 
 class LongNormalPlatform extends Platform<LongNormalPlatformState> {
-  LongNormalPlatform({super.position, super.isFirstPlatform});
+  LongNormalPlatform({super.position, super.isFirstPlatform, super.speed});
 
   final Map<String, Vector2> spriteOptions = {
     'platform_normal_long': Vector2(48, 16)..scale(2),
@@ -96,7 +97,7 @@ class LongNormalPlatform extends Platform<LongNormalPlatformState> {
 enum ShortNormalPlatformState { only }
 
 class ShortNormalPlatform extends Platform<ShortNormalPlatformState> {
-  ShortNormalPlatform({super.position, super.isFirstPlatform});
+  ShortNormalPlatform({super.position, super.isFirstPlatform, super.speed});
 
   final Map<String, Vector2> spriteOptions = {
     'platform_normal_short': Vector2(32, 16)..scale(2),

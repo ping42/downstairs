@@ -20,6 +20,7 @@ class Downstairs extends FlameGame
   final AudioPlayer effectPlayer;
   final WorldComponent _world = WorldComponent();
   GameplayComponent gameplayComponent = GameplayComponent();
+  LevelComponent levelComponent = LevelComponent();
   ObjectComponent objectComponent = ObjectComponent();
   final int screenBufferSpace = 30;
 
@@ -33,6 +34,8 @@ class Downstairs extends FlameGame
     await add(_world);
 
     await add(gameplayComponent);
+
+    await add(levelComponent);
 
     overlays.add('gameOverlay');
   }
@@ -51,7 +54,9 @@ class Downstairs extends FlameGame
     }
 
     if (gameplayComponent.isPlaying) {
-      // Move camera and worldBounds down over time
+      checkLevelUp();
+
+      // move camera and worldBounds down over time
       cameraY += dt * 50;
       worldBoundsTop = cameraY;
       final worldBounds = Rect.fromLTRB(
@@ -77,6 +82,8 @@ class Downstairs extends FlameGame
     if (children.contains(objectComponent)) {
       objectComponent.removeFromParent();
     }
+
+    levelComponent.reset();
 
     player.reset();
 
@@ -108,8 +115,9 @@ class Downstairs extends FlameGame
 
   void setPlatformsGenerator() {
     objectComponent = ObjectComponent(
-      minVerticalDistanceToNextPlatform: 200,
-      maxVerticalDistanceToNextPlatform: 300,
+      minVerticalDistanceToNextPlatform: levelComponent.minDistance,
+      maxVerticalDistanceToNextPlatform: levelComponent.maxDistance,
+      minPlatformSpeed: levelComponent.platformSpeed,
     );
 
     add(objectComponent);
@@ -137,6 +145,17 @@ class Downstairs extends FlameGame
       resumeEngine();
     } else {
       pauseEngine();
+    }
+  }
+
+  void checkLevelUp() {
+    if (levelComponent.shouldLevelUp(gameplayComponent.score.value)) {
+      levelComponent.levelUp();
+
+      objectComponent.configure(
+        levelComponent.level.value,
+        levelComponent.difficulty,
+      );
     }
   }
 }
