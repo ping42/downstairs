@@ -4,11 +4,11 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:downstairs/game/game.dart';
 import 'package:downstairs/game/sprites/player.dart';
 import 'package:downstairs/l10n/l10n.dart';
+import 'package:flame/events.dart';
 import 'package:flame/game.dart';
-import 'package:flame/input.dart';
 
 class Downstairs extends FlameGame
-    with HasKeyboardHandlerComponents, HasTappables, HasCollisionDetection {
+    with HasKeyboardHandlerComponents, TapCallbacks, HasCollisionDetection {
   Downstairs({
     required this.l10n,
     required this.effectPlayer,
