@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:downstairs/game/game.dart';
 import 'package:downstairs/gen/assets.gen.dart';
+import 'package:downstairs/util/flavor_config.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
@@ -26,7 +27,7 @@ abstract class Platform<T> extends SpriteGroupComponent<T>
 
   @override
   FutureOr<void> onLoad() async {
-    debugMode = true;
+    debugMode = FlavorConfig.instance.isDev || FlavorConfig.instance.isStaging;
 
     await super.onLoad();
 

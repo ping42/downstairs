@@ -1,6 +1,7 @@
 import 'package:downstairs/game/game.dart';
 import 'package:downstairs/game/sprites/platform.dart';
 import 'package:downstairs/gen/assets.gen.dart';
+import 'package:downstairs/util/flavor_config.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/services.dart';
@@ -36,7 +37,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
 
   @override
   Future<void> onLoad() async {
-    debugMode = true;
+    debugMode = FlavorConfig.instance.isDev || FlavorConfig.instance.isStaging;
 
     await super.onLoad();
 
