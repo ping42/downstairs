@@ -18,22 +18,8 @@ class MainMenuOverlay extends StatefulWidget {
 }
 
 class MainMenuOverlayState extends State<MainMenuOverlay> {
-  late final Bgm bgm;
-
   Character character = Character.chef;
   int level = 1;
-
-  @override
-  void initState() {
-    super.initState();
-    bgm = context.read<AudioCubit>().bgm;
-  }
-
-  @override
-  void dispose() {
-    bgm.pause();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
