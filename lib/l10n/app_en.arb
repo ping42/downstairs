@@ -2,6 +2,8 @@
   "@@locale": "en",
   "titleAppBarTitle": "Downstairs",
   "titleButtonStart": "Start",
+  "titleButtonStartAgain": "Start Again",
+  "titleButtonGameOver": "Game Over",
   "loading": "Loading {label}...",
   "loadingPhaseLabel": "{loadingPhase, select, audio{Delightful music} images{Beautiful scenery} other{ }}"
 }
