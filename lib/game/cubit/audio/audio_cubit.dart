@@ -41,6 +41,9 @@ class AudioCubit extends Cubit<AudioState> {
   }
 
   Future<void> playBgm() async {
+    if (bgm.isPlaying) {
+      return;
+    }
     if (FlavorConfig.instance.isDev) {
       await bgm.play(Assets.audio.background);
       return toggleVolume();

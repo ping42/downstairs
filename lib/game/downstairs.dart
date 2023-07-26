@@ -138,6 +138,12 @@ class Downstairs extends FlameGame
     overlays.remove('gameOverOverlay');
   }
 
+  void backToMainMenu() {
+    overlays.remove('gameOverOverlay');
+    gameplayComponent.state = GameState.intro;
+    overlays.add('mainMenuOverlay');
+  }
+
   void resetGame() {
     player.removeFromParent();
     startGame();

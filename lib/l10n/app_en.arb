@@ -4,6 +4,7 @@
   "titleButtonStart": "Start",
   "titleButtonStartAgain": "Start Again",
   "titleButtonGameOver": "Game Over",
+  "titleButtonBackToMainMenu": "Back to Main Menu",
   "loading": "Loading {label}...",
   "loadingPhaseLabel": "{loadingPhase, select, audio{Delightful music} images{Beautiful scenery} other{ }}"
 }

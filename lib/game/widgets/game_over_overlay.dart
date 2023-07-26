@@ -42,13 +42,31 @@ class GameOverOverlay extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: game.startGameAgain,
                 child: Center(
-                    child: Text(
-                  l10n.titleButtonStartAgain,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
+                  child: Text(
+                    l10n.titleButtonStartAgain,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
                   ),
-                )),
+                ),
+              ),
+            ),
+            const SizedBox(height: 30),
+            SizedBox(
+              width: 250,
+              height: 64,
+              child: ElevatedButton(
+                onPressed: game.backToMainMenu,
+                child: Center(
+                  child: Text(
+                    l10n.titleButtonBackToMainMenu,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
