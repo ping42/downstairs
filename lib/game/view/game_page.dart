@@ -4,7 +4,6 @@ import 'package:downstairs/game/widgets/main_menu_overlay.dart';
 import 'package:downstairs/l10n/l10n.dart';
 import 'package:downstairs/loading/cubit/cubit.dart';
 import 'package:flame/game.dart' hide Route;
-import 'package:flame_audio/bgm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -44,21 +43,6 @@ class GameView extends StatefulWidget {
 
 class _GameViewState extends State<GameView> {
   FlameGame? _game;
-
-  late final Bgm bgm;
-
-  @override
-  void initState() {
-    super.initState();
-    bgm = context.read<AudioCubit>().bgm;
-    // bgm.play(Assets.audio.background);
-  }
-
-  @override
-  void dispose() {
-    bgm.pause();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,9 +1,12 @@
 import 'package:downstairs/game/game.dart';
 import 'package:downstairs/gen/assets.gen.dart';
 import 'package:downstairs/l10n/l10n.dart';
+import 'package:downstairs/util/flavor_config.dart';
 import 'package:flame/game.dart';
 import 'package:flame/widgets.dart';
+import 'package:flame_audio/bgm.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainMenuOverlay extends StatefulWidget {
   const MainMenuOverlay(this.game, {super.key});
@@ -15,8 +18,22 @@ class MainMenuOverlay extends StatefulWidget {
 }
 
 class MainMenuOverlayState extends State<MainMenuOverlay> {
+  late final Bgm bgm;
+
   Character character = Character.chef;
   int level = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    bgm = context.read<AudioCubit>().bgm;
+  }
+
+  @override
+  void dispose() {
+    bgm.pause();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +93,7 @@ class MainMenuOverlayState extends State<MainMenuOverlay> {
                   height: 64,
                   child: ElevatedButton(
                     onPressed: () {
+                      context.read<AudioCubit>().playBgm();
                       game.gameplayComponent.character = character;
                       game.startGame();
                     },

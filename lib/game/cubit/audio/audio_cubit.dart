@@ -1,4 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:downstairs/gen/assets.gen.dart';
+import 'package:downstairs/util/flavor_config.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flame_audio/bgm.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +12,7 @@ class AudioCubit extends Cubit<AudioState> {
   AudioCubit({required AudioCache audioCache})
       : effectPlayer = AudioPlayer()..audioCache = audioCache,
         bgm = Bgm(audioCache: audioCache),
-        super(const AudioState(volume: 0));
+        super(const AudioState());
 
   @visibleForTesting
   AudioCubit.test({
@@ -36,6 +38,14 @@ class AudioCubit extends Cubit<AudioState> {
       return _changeVolume(1);
     }
     return _changeVolume(0);
+  }
+
+  Future<void> playBgm() async {
+    if (FlavorConfig.instance.isDev) {
+      await bgm.play(Assets.audio.background);
+      return toggleVolume();
+    }
+    return bgm.play(Assets.audio.background);
   }
 
   @override
