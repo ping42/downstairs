@@ -1,6 +1,8 @@
 import 'dart:io' show Platform;
 
 import 'package:downstairs/game/game.dart';
+import 'package:downstairs/game/widgets/level_display.dart';
+import 'package:downstairs/game/widgets/score_display.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -136,51 +138,5 @@ class GameOverlayState extends State<GameOverlay> {
     setState(() {
       isPaused = !isPaused;
     });
-  }
-}
-
-class LevelDisplay extends StatelessWidget {
-  const LevelDisplay(this.game, {super.key});
-
-  final Game game;
-
-  @override
-  Widget build(BuildContext context) {
-    final game = this.game as Downstairs;
-    return ValueListenableBuilder(
-      valueListenable: game.levelComponent.level,
-      builder: (context, value, child) {
-        return Text(
-          'Level: $value',
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-          ),
-        );
-      },
-    );
-  }
-}
-
-class ScoreDisplay extends StatelessWidget {
-  const ScoreDisplay(this.game, {super.key});
-
-  final Game game;
-
-  @override
-  Widget build(BuildContext context) {
-    final game = this.game as Downstairs;
-    return ValueListenableBuilder(
-      valueListenable: game.gameplayComponent.score,
-      builder: (context, value, child) {
-        return Text(
-          'Score: $value',
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-          ),
-        );
-      },
-    );
   }
 }

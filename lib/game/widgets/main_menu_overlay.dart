@@ -1,10 +1,8 @@
 import 'package:downstairs/game/game.dart';
 import 'package:downstairs/gen/assets.gen.dart';
 import 'package:downstairs/l10n/l10n.dart';
-import 'package:downstairs/util/flavor_config.dart';
 import 'package:flame/game.dart';
 import 'package:flame/widgets.dart';
-import 'package:flame_audio/bgm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

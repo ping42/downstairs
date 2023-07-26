@@ -1,4 +1,5 @@
 import 'package:downstairs/game/game.dart';
+import 'package:downstairs/game/widgets/game_over_overlay.dart';
 import 'package:downstairs/game/widgets/game_overlay.dart';
 import 'package:downstairs/game/widgets/main_menu_overlay.dart';
 import 'package:downstairs/l10n/l10n.dart';
@@ -61,7 +62,7 @@ class _GameViewState extends State<GameView> {
         overlayBuilderMap: <String, Widget Function(BuildContext, Game)>{
           'gameOverlay': (context, game) => GameOverlay(game),
           'mainMenuOverlay': (context, game) => MainMenuOverlay(game),
-          // 'gameOverOverlay': (context, game) => GameOverOverlay(game),
+          'gameOverOverlay': (context, game) => GameOverOverlay(game),
         },
       ),
     );
