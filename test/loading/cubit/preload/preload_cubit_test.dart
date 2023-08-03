@@ -96,6 +96,7 @@ void main() {
               Assets.images.downstairsLogo.path,
               Assets.images.platformNormalLong.path,
               Assets.images.platformNormalShort.path,
+              Assets.images.platformSpikes.path,
             ]),
           ).called(1);
         },

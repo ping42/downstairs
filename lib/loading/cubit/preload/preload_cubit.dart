@@ -37,6 +37,7 @@ class PreloadCubit extends Cubit<PreloadState> {
           Assets.images.downstairsLogo.path,
           Assets.images.platformNormalLong.path,
           Assets.images.platformNormalShort.path,
+          Assets.images.platformSpikes.path,
         ]),
       ),
     ];

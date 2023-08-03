@@ -68,6 +68,9 @@ class $AssetsImagesGen {
 
   AssetGenImage get platformNormalShort =>
       const AssetGenImage('assets/images/platform_normal_short.png');
+
+  AssetGenImage get platformSpikes =>
+      const AssetGenImage('assets/images/platform_spikes.png');
 }
 
 class $AssetsLicensesGen {

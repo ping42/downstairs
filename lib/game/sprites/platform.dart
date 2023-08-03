@@ -121,3 +121,24 @@ class ShortNormalPlatform extends Platform<ShortNormalPlatformState> {
     await super.onLoad();
   }
 }
+
+enum SpikesPlatformState { only }
+
+class SpikesPlatform extends Platform<SpikesPlatformState> {
+  SpikesPlatform({super.position, super.isFirstPlatform, super.speed});
+
+  final Vector2 defaultSize = Vector2(49, 18)..scale(2);
+
+  @override
+  Future<void>? onLoad() async {
+    sprites = {
+      SpikesPlatformState.only:
+          await gameRef.loadSprite(Assets.images.platformSpikes.path),
+    };
+
+    current = SpikesPlatformState.only;
+
+    size = defaultSize;
+    await super.onLoad();
+  }
+}

@@ -122,6 +122,12 @@ class ObjectComponent extends Component with HasGameRef<Downstairs> {
         isFirstPlatform: isFirstPlatform,
         speed: minPlatformSpeed,
       );
+    } else if (probGen.generateWithProbability(30) && !isFirstPlatform) {
+      return SpikesPlatform(
+        position: position,
+        isFirstPlatform: isFirstPlatform,
+        speed: minPlatformSpeed,
+      );
     }
     return ShortNormalPlatform(
       position: position,

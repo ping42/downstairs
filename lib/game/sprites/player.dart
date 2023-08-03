@@ -90,7 +90,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
         }
 
         // add player score if they have touched a new platform
-        if (!_steppedPlatforms.contains(platform)) {
+        if (isOnNewPlatform(platform)) {
           gameRef.gameplayComponent.increaseScore();
           _steppedPlatforms.add(platform);
         }
@@ -145,11 +145,16 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
 
     final isCollidingTop = position.y < other.y;
     if (isMovingDown && isCollidingTop) {
-      if (other is LongNormalPlatform || other is ShortNormalPlatform) {
+      if (other is LongNormalPlatform ||
+          other is ShortNormalPlatform ||
+          other is SpikesPlatform) {
         // set player to be on top of platform and falling velocity as zero
-        resetVelocity();
+        _velocity = Vector2.zero();
         position.y = other.y - size.y / 2;
         current = PlayerState.idle;
+        if (other is SpikesPlatform && isOnNewPlatform(other)) {
+          hp.value -= 20;
+        }
         return;
       }
     }
@@ -207,6 +212,10 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
   double get playerBottomY => position.y + size.y / 2 - collisionOffset;
 
   bool get isPlayerDead => hp.value <= 0;
+
+  bool isOnNewPlatform(Platform<dynamic> platform) {
+    return !_steppedPlatforms.contains(platform);
+  }
 
   Future<void> _loadSpriteAnimations(Character character) async {
     if (character == Character.chef) {
