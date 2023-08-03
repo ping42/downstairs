@@ -4,6 +4,7 @@ import 'package:downstairs/gen/assets.gen.dart';
 import 'package:downstairs/util/flavor_config.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 enum PlayerState {
@@ -31,6 +32,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
   bool get isMovingDown => _velocity.y > 0;
   Character character;
   double jumpSpeed;
+  ValueNotifier<double> hp = ValueNotifier(100);
   final double _gravity = 9;
   final double collisionOffset = 5;
   final List<Platform> _steppedPlatforms = [];
@@ -102,7 +104,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
 
     position += _velocity * dt;
 
-    // flip when monkey facing opposite direction
+    // flip when player facing opposite direction
     if (_hAxisInput < 0 && scale.x > 0) {
       flipHorizontally();
     } else if (_hAxisInput > 0 && scale.x < 0) {
@@ -145,7 +147,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
     if (isMovingDown && isCollidingTop) {
       if (other is LongNormalPlatform || other is ShortNormalPlatform) {
         // set player to be on top of platform and falling velocity as zero
-        _velocity = Vector2.zero();
+        resetVelocity();
         position.y = other.y - size.y / 2;
         current = PlayerState.idle;
         return;
@@ -181,9 +183,8 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
     _hAxisInput = 0;
   }
 
-  void reset() {
+  void resetVelocity() {
     _velocity = Vector2.zero();
-    current = PlayerState.idle;
   }
 
   void resetPosition() {
@@ -193,7 +194,19 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
     );
   }
 
+  void resetHp() {
+    hp = ValueNotifier(100);
+  }
+
+  void reset() {
+    resetVelocity();
+    resetHp();
+    current = PlayerState.idle;
+  }
+
   double get playerBottomY => position.y + size.y / 2 - collisionOffset;
+
+  bool get isPlayerDead => hp.value <= 0;
 
   Future<void> _loadSpriteAnimations(Character character) async {
     if (character == Character.chef) {

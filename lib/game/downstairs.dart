@@ -68,10 +68,11 @@ class Downstairs extends FlameGame
       camera.worldBounds = worldBounds;
 
       if (player.position.y >
-          cameraY +
-              _worldComponent.size.y +
-              player.size.y +
-              screenBufferSpace) {
+              cameraY +
+                  _worldComponent.size.y +
+                  player.size.y +
+                  screenBufferSpace ||
+          player.isPlayerDead) {
         onLose();
       }
     }

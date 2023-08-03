@@ -1,6 +1,7 @@
 import 'dart:io' show Platform;
 
 import 'package:downstairs/game/game.dart';
+import 'package:downstairs/game/widgets/hp_display.dart';
 import 'package:downstairs/game/widgets/level_display.dart';
 import 'package:downstairs/game/widgets/score_display.dart';
 import 'package:flame/game.dart';
@@ -68,6 +69,7 @@ class GameOverlayState extends State<GameOverlay> {
                 ),
                 LevelDisplay(widget.game),
                 ScoreDisplay(widget.game),
+                HpDisplay(widget.game),
               ],
             ),
           ),
